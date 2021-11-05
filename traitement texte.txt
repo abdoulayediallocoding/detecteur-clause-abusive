@@ -1,0 +1,34 @@
+
+file = open("cgv.txt", "r", encoding='utf-8')
+
+file = file.read()
+
+sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
+
+text = ''.join(c for c in file if not c.isdigit())
+
+sent_text =  sent_detector.tokenize(text.strip())
+
+liste_phrases = [p for p in sent_text if len(word_tokenize(p)) > 5]
+
+liste_label = []
+
+for phrase in liste_phrases:
+	liste_label.append('3')
+	
+
+dico ={'clauses': liste_phrases, 'label' : liste_label}
+
+
+with open('clauses abusives.csv') as f:
+	reader = csv.reader(f)
+	
+	for r in reader:
+		liste_phrases.append(r[0])
+		liste_label.append(r[1])
+		
+	
+		
+	
+
+df = pd.DataFrame(dico)
